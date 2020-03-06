@@ -1,53 +1,73 @@
-USE bamazon;
+DROP DATABASE IF EXISTS bamazon_db;
 
 CREATE DATABASE bamazon_db;
 
+use bamazon_db;
+
 
 CREATE TABLE products (
-item_id INT NOT NULL AUTO_INCREMENT,
+item_id INT(10) AUTO_INCREMENT NOT NULL,
 product_name VARCHAR(45) NULL,
-department_name VARCHAR(45) NULL,
-price DEC(40,3) NULL,
+department_name VARCHAR(100) NULL,
+price DEC(40,3),
 stock_quantity 	INT(40) NULL,
 PRIMARY KEY (item_id)
 );
 
-INSERT INTO products
-(product_name,department_name,price,stock_quantity)
-VALUES ("Black Cap", "Headwear", "24", "30");
+alter table products auto_increment = 1000;
 
-INSERT INTO products
-(product_name,department_name,price,stock_quantity)
-VALUES ("Adidas Men's Ultra Boost", "Footwear", "130", "10");
+use bamazon_db;
 
-INSERT INTO products
-(product_name,department_name,price,stock_quantity)
-VALUES ("Adidas Women's Ultra Boost", "Footwear", "115", "20");
+INSERT INTO products (product_name, department_name, price, stock_quantity)
+VALUES ("iPads", "Electronics", 300.00, 30),
+       ("Apple Watch", "Electronics", 350.00, 35),
+       ("Apple TV", "Electronics", 150.00, 20),
+       ("Adidas Men's Ultra Boost", "Footwear", 130.50, 10),
+       ("Adidas Women's Ultra Boost", "Footwear", 115.00, 20),
+       ("Star Wars Lego Baby Yoda ", "Toys", 100.30, 5),
+       ("Baby Yoda Plush Toy", "Toys", 50.00, 4),
+       ("iPhone 11 Pro Black Case", "Cellphone Accessories", 15.50, 5),
+       ("iPhone 11 Pro Max Black Case", "Cellphone Accessories", 23.00, 8),
+       ("Bath & Body Works Frozen Lake Candle", "Home and Kitchen", 24.00, 15);
 
-INSERT INTO products
-(product_name,department_name,price,stock_quantity)
-VALUES ("Apple Watch Black Leather Band", "Accessories", "10", "18");
 
-INSERT INTO products
-(product_name,department_name,price,stock_quantity)
-VALUES ("iPhone 11 Pro Black Case", "Cellphone Accessories", "20", "10");
+ALTER TABLE products ADD product_sales DEC(40,3);
+ALTER TABLE products ALTER product_sales SET DEFAULT 0.00;
 
-INSERT INTO products
-(product_name,department_name,price,stock_quantity)
-VALUES ("iPhone 11 Pro Max Black Case", "Cellphone Accessories", "23", "8");
+CREATE TABLE departments (
+department_id INT(10) AUTO_INCREMENT NOT NULL,
+department_name VARCHAR(50),
+over_head_costs INT(10),
+UNIQUE (department_name),
+PRIMARY KEY (department_id)
+);
 
-INSERT INTO products
-(product_name,department_name,price,stock_quantity)
-VALUES ("Bath & Body Works Frozen Lake Candle", "Home and Kitchen", "24", "32");
+ALTER TABLE departments AUTO_INCREMENT = 100;
 
-INSERT INTO products
-(product_name,department_name,price,stock_quantity)
-VALUES ("Star Wars Lego Baby Yoda ", "Toys", "54", "5");
+INSERT INTO departments (department_name) SELECT DISTINCT(department_name) FROM products;
 
-INSERT INTO products
-(product_name,department_name,price,stock_quantity)
-VALUES ("Baby Yoda Plush Toy", "Toy", "30", "4");
+ALTER TABLE departments MODIFY COLUMN over_head_costs DEC(40,3);
 
-INSERT INTO products
-(product_name,department_name,price,stock_quantity)
-VALUES ("Wireless Numeric Keyboard", "Technology", "15", "25");
+UPDATE products SET product_sales = 0.00;
+UPDATE products SET stock_quantity = 12 where item_id = 1006;
+
+SELECT * FROM products;
+SELECT * FROM departments;
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
